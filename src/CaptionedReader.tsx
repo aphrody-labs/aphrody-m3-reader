@@ -1,4 +1,5 @@
 "use client";
+import { useModePageRestoration } from "./use-mode-page-restoration";
 
 /**
  * Lecteur de planches légendées (recueil illustré, interview) — format manga + légende.
@@ -279,7 +280,14 @@ export function CaptionedReader({
 	);
 	// oxlint-enable react-hooks/exhaustive-deps
 
-	useVerticalScrollSync(mode, scrollParentRef, virtualizer, setCurrent);
+	const restoring = useModePageRestoration(
+		mode,
+		current,
+		scrollParentRef,
+		virtualizer,
+		containerRef,
+	);
+	useVerticalScrollSync(mode, scrollParentRef, virtualizer, setCurrent, restoring);
 
 	// Navigation clavier des planches.
 	//

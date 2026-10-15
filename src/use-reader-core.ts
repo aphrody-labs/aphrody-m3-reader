@@ -113,12 +113,14 @@ export function useVerticalScrollSync(
   scrollParentRef: RefObject<HTMLElement | null>,
   virtualizer: Virtualizer<HTMLDivElement, Element>,
   setCurrent: (index: number) => void,
+  restoring?: RefObject<boolean>,
 ) {
   useEffect(() => {
     if (mode !== "vertical") return;
     const el = scrollParentRef.current;
     if (!el) return;
     const onScroll = () => {
+      if (restoring?.current) return;
       const mid = el.scrollTop + el.clientHeight / 2;
       const item = virtualizer.getVirtualItems().find((vi) => vi.start <= mid && vi.end >= mid);
       if (item) setCurrent(item.index);
@@ -126,7 +128,7 @@ export function useVerticalScrollSync(
     el.addEventListener("scroll", onScroll, { passive: true });
     onScroll();
     return () => el.removeEventListener("scroll", onScroll);
-  }, [mode, scrollParentRef, virtualizer, setCurrent]);
+  }, [mode, scrollParentRef, virtualizer, setCurrent, restoring]);
 }
 
 /** Absolute placement of one virtual row. */

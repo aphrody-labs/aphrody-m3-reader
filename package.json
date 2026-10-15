@@ -1,22 +1,23 @@
 {
   "name": "@aphrody/m3-reader",
-  "version": "1.4.5",
+  "version": "3.3.12",
   "description": "Material 3 manga and illustrated book readers for React",
   "license": "Apache-2.0",
   "files": [
     "dist",
     "src",
-    "styles.css"
+    "styles.css",
+    "!src/**/*.test.*"
   ],
   "type": "module",
   "sideEffects": [
     "*.css"
   ],
   "main": "./dist/index.js",
-  "types": "./dist/index.d.ts",
+  "types": "./src/index.ts",
   "exports": {
     ".": {
-      "types": "./dist/index.d.ts",
+      "types": "./src/index.ts",
       "default": "./dist/index.js"
     },
     "./source": {
@@ -33,18 +34,18 @@
     "access": "public"
   },
   "scripts": {
-    "build": "bun ../../scripts/build.ts build --only $npm_package_name",
+    "build": "bun build src/index.ts --target browser --packages external --outdir dist --banner '\"use client\";'",
     "typecheck": "bun check --noEmit",
     "test": "bun test",
     "typecheck:fast": "bun check --noEmit"
   },
   "dependencies": {
-    "@tanstack/react-virtual": "catalog:",
-    "lucide-react": "catalog:",
-    "swiper": "catalog:"
+    "@tanstack/react-virtual": "3.14.13",
+    "lucide-react": "1.49.0",
+    "swiper": "14.3.0"
   },
   "devDependencies": {
-    "@aphrody/m3-config": "workspace:*"
+    "@aphrody/m3-config": "3.3.11"
   },
   "peerDependencies": {
     "react": ">=18.0.0",

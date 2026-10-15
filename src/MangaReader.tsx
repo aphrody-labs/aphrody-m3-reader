@@ -1,4 +1,5 @@
 "use client";
+import { useModePageRestoration } from "./use-mode-page-restoration";
 
 /**
  * Lecteur de scan manga complet, 100 % client.
@@ -196,7 +197,14 @@ export function MangaReader({
 	});
 
 	// Synchronise le compteur en mode vertical sur la page la plus visible.
-	useVerticalScrollSync(mode, scrollParentRef, virtualizer, setCurrent);
+	const restoring = useModePageRestoration(
+		mode,
+		current,
+		scrollParentRef,
+		virtualizer,
+		containerRef,
+	);
+	useVerticalScrollSync(mode, scrollParentRef, virtualizer, setCurrent, restoring);
 
 	useEffect(() => {
 		onPageChange?.(current + 1);
